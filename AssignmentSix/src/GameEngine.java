@@ -11,16 +11,16 @@ import java.util.Scanner;
 public class GameEngine {
 
 	static int NUMBER_OF_DIE = 5; // number of die in play
-	int TOTAL_SCORE = 0; // total score (lower section)
-	int UPPER_SCORE = 0; // upper score(upper section)
+	private int _lowerScore = 0; // total score (lower section)
+	private int _upperScore = 70; // upper score(upper section)
 	
 
 	// procedure to show the die and score sheet
 	public void displayScoreSheetAndDice(ScoreSheet score, Dice[] allDie)
 	{
 		// calculates the score sheet
-		score.resetUpperSection(UPPER_SCORE);
-		score.resetLowerSection(TOTAL_SCORE);
+		score.resetUpperSection(this._upperScore);
+		score.resetLowerSection(this._lowerScore);
 		score.calculateSections(allDie);	
 		
 		// shows score sheet & die values
@@ -50,8 +50,8 @@ public class GameEngine {
 	public void jokerRules(ScoreSheet score, Dice[] allDie)
 	{
 		// calculates all the values beforehand 
-		score.resetUpperSection(UPPER_SCORE);
-		score.resetLowerSection(TOTAL_SCORE);
+		score.resetUpperSection(this._upperScore);
+		score.resetLowerSection(this._lowerScore);
 		score.calculateSections(allDie);	
 		
 		// if the yatzhee bonus scenario is achieved
@@ -271,10 +271,8 @@ public class GameEngine {
 										if (scoreCard.getUpperSectionToKeep()[chooseColumn - 1] != 0)
 										{
 											// adds selected value from upper section to upper and total score
-											UPPER_SCORE = scoreCard.getUpperSectionRows()[6] + 
-													scoreCard.getUpperSectionRows()[chooseColumn - 1];
-											TOTAL_SCORE = scoreCard.getLowerSectionRows()[8] + 
-													scoreCard.getUpperSectionRows()[chooseColumn - 1];
+											this._upperScore = scoreCard.getUpperSectionRows()[6] + 
+													scoreCard.getUpperSectionRows()[chooseColumn - 1];										
 											scoreCard.getUpperSectionRowsStatus()[chooseColumn - 1] = " || ALREADY SELECTED ||";
 											scoreCard.getUpperSectionToKeep()[chooseColumn - 1] = 0; // makes it unusable again
 											rowCatch = false;
@@ -314,7 +312,7 @@ public class GameEngine {
 										if (scoreCard.getLowerSectionToKeep()[chooseColumn - 1] != 0)
 										{
 											// adds selected value from lower section to total score
-											TOTAL_SCORE = scoreCard.getLowerSectionRows()[8] + 
+											this._lowerScore = scoreCard.getLowerSectionRows()[8] + 
 													scoreCard.getLowerSectionRows()[chooseColumn - 1];
 											scoreCard.getLowerSectionRowsStatus()[chooseColumn - 1] = " || ALREADY SELECTED ||";
 											scoreCard.getLowerSectionToKeep()[chooseColumn - 1] = 0; // makes it unusable again
@@ -362,10 +360,7 @@ public class GameEngine {
 			{
 				if (scoreCard.getBonusAchieved().equals(true))
 				{
-					
-					TOTAL_SCORE = TOTAL_SCORE + 35;
-					UPPER_SCORE = UPPER_SCORE + 35;
-					
+					this._upperScore = this._upperScore + 35;					
 					oneTimeBonus = true;
 				}
 			}
@@ -373,6 +368,11 @@ public class GameEngine {
 			
 			// shows score sheet and die
 			jokerRules(scoreCard, totalDie);
+			this._upperScore = this._upperScore - 35;	
 		}
+
+		scoreCard.calculateAndDisplayTotalScore();
+		
+
 	}
 }

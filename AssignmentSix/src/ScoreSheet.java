@@ -25,6 +25,8 @@ public class ScoreSheet {
 	private Boolean _yahtzeeRolled = false;
 	private Boolean _bonusAchieved = false;
 	private Boolean _jokerOn = false;
+	
+	private int _totalScore = 0;
 	// _upperSectionRows
 	// [0] = aces
 	// [1] = twos
@@ -144,6 +146,7 @@ public class ScoreSheet {
 		return this._dieOfSameValue;
 	}
 	
+
 	// method fixes a yahtzee bonus glitch (IMPORTANT)
 	public void fixYahtzeeBonus()
 	{
@@ -230,7 +233,6 @@ public class ScoreSheet {
 			if (this._upperSectionRows[6] >= 63)
 			{
 				this._upperSectionRows[7] = 35;
-				this._lowerSectionRows[8] = this._lowerSectionRows[8] + 35;
 				this._upperSectionRows[8] = this._upperSectionRows[6] + 35;
 				this._bonusAchieved = true;
 			}
@@ -335,6 +337,14 @@ public class ScoreSheet {
 		
 	}
 
+	
+	public void calculateAndDisplayTotalScore()
+	{
+		this._totalScore = this._upperSectionRows[8] + this._lowerSectionRows[8];
+		System.out.println("Congralutions! You Finished Yatzhee! Your Final Score Is: " + this._totalScore);
+	}
+	
+	
 	public void displayInfo()
 	{
 		// displays Score Sheet
@@ -364,7 +374,7 @@ public class ScoreSheet {
 			+    "| 6 | Yahtzee          | " + this._lowerSectionRows[5] + this._lowerSectionRowsStatus[5] +   "\n"
 			+    "| 7 | Chance           | " + this._lowerSectionRows[6] + this._lowerSectionRowsStatus[6] +   "\n"
 			+    "|   | Yatzhee Bonus    | " + this._lowerSectionRows[7] + "\n"
-			+    "|   | Grand Total      | " + this._lowerSectionRows[8] + "\n";
+			+    "|   | Total Score      | " + this._lowerSectionRows[8] + "\n";
 
 	    System.out.println(upperSection);
 	    System.out.println(lowerSection);				

@@ -1,1 +1,12 @@
-# AssignmentSix
+![alt tag](https://github.com/Ultimatrick/AssignmentSix/blob/master/Screenshot%20(68).png)
+![alt tag](https://github.com/Ultimatrick/AssignmentSix/blob/master/Screenshot%20(70).png)
+![alt tag](https://github.com/Ultimatrick/AssignmentSix/blob/master/Screenshot%20(72).png)
+![alt tag](https://github.com/Ultimatrick/AssignmentSix/blob/master/Screenshot%20(74).png)
+![alt tag](https://github.com/Ultimatrick/AssignmentSix/blob/master/Screenshot%20(75).png)
+![alt tag](https://github.com/Ultimatrick/AssignmentSix/blob/master/Screenshot%20(76).png)
+![alt tag](https://github.com/Ultimatrick/AssignmentSix/blob/master/Screenshot%20(79).png)
+![alt tag](https://github.com/Ultimatrick/AssignmentSix/blob/master/Screenshot%20(80).png)
+![alt tag](https://github.com/Ultimatrick/AssignmentSix/blob/master/Screenshot%20(83).png)
+![alt tag](https://github.com/Ultimatrick/AssignmentSix/blob/master/Screenshot%20(84).png)
+![alt tag](https://github.com/Ultimatrick/AssignmentSix/blob/master/Screenshot%20(86).png)
+

@@ -12,22 +12,8 @@ public class GameEngine {
 
 	static int NUMBER_OF_DIE = 5; // number of die in play
 	private int _lowerScore = 0; // total score (lower section)
-	private int _upperScore = 70; // upper score(upper section)
-	
-
-	// procedure to show the die and score sheet
-	public void displayScoreSheetAndDice(ScoreSheet score, Dice[] allDie)
-	{
-		// calculates the score sheet
-		score.resetUpperSection(this._upperScore);
-		score.resetLowerSection(this._lowerScore);
-		score.calculateSections(allDie);	
+	private int _upperScore = 0; // upper score(upper section)
 		
-		// shows score sheet & die values
-		score.displayInfo();
-		displayDie(allDie);
-	}
-	
 	// procedure to display the values of the die
 	public void displayDie(Dice[] allDie)
 	{
@@ -38,16 +24,16 @@ public class GameEngine {
 			+    "======================";
 		
 		System.out.println(displayDie);
-		for (int i = 0; i < NUMBER_OF_DIE ; i++)
+		for (int count = 0; count < NUMBER_OF_DIE ; count++)
 		{
-			System.out.println("| " + (i + 1 )+ " | " + "Dice #" + (i+1) + " | " 
-		+ allDie[i].getValue());
+			System.out.println("| " + (count + 1 )+ " | " + "Dice #" + (count + 1) + " | " 
+		+ allDie[count].getValue());
 		}
 		System.out.println();			
 	}
 	
 	// procedure to check if any joker rule exceptions occur
-	public void jokerRules(ScoreSheet score, Dice[] allDie)
+	public void displayInfo(ScoreSheet score, Dice[] allDie)
 	{
 		// calculates all the values beforehand 
 		score.resetUpperSection(this._upperScore);
@@ -85,14 +71,15 @@ public class GameEngine {
 		ScoreSheet scoreCard = new ScoreSheet();
 		Dice[] totalDie = new Dice[NUMBER_OF_DIE]; // array to store all the die
 		Boolean oneTimeBonus = false; // allows bonus to be applied once
-		Boolean oneTimeYahtzee = false;
+		Boolean fixOneTimeBonus = false;
+		Boolean oneTimeYahtzee = false; // allows 50 point yahtzee only once
 		Scanner scan = new Scanner(System.in);
 		System.out.println("Welcome To Yatzhee Java Style!");
 		
 		// creates six die
-		for (int i = 0; i < NUMBER_OF_DIE; i++)
+		for (int count = 0; count < NUMBER_OF_DIE; count++)
 		{
-			totalDie[i] = new Dice();
+			totalDie[count] = new Dice();
 		}
 		
 		scoreCard.startSectionKeeping(); // allows to choose columns
@@ -105,15 +92,14 @@ public class GameEngine {
 			System.out.println("================================================");
 			
 			// rolls six die
-			for (int i = 0; i < NUMBER_OF_DIE; i++)
+			for (int count = 0; count < NUMBER_OF_DIE; count++)
 			{
-				totalDie[i].roll();
+				totalDie[count].roll();
 			}
 			
 			// shows score sheet & die values
-			jokerRules(scoreCard, totalDie);
-	
-			
+			displayInfo(scoreCard, totalDie);
+				
 			// limits player to 3 rolls in total (2 re-rolls)
 			for (int reRolls = 0; reRolls < (3-1); reRolls++)
 			{
@@ -209,7 +195,7 @@ public class GameEngine {
 					}
 				}
 			
-				jokerRules(scoreCard, totalDie);			
+				displayInfo(scoreCard, totalDie);			
 			}	
 			
 			// variables for usage in row selection
@@ -229,17 +215,17 @@ public class GameEngine {
 						+ " Or Lower Section(Type '2'). ");
 					
 				    // makes sure upper section is not full
-				    for (int i = 0; i < scoreCard.getUpperSectionToKeep().length; i++)
+				    for (int count = 0; count < scoreCard.getUpperSectionToKeep().length; count++)
 				    {
-				    	if (scoreCard.getUpperSectionToKeep()[i] != 0)
+				    	if (scoreCard.getUpperSectionToKeep()[count] != 0)
 				    	{
 				    		upperSectionIsFull = false;
 				    	}
 				    }
 				    // makes sure lower section is not full
-				    for (int i = 0; i < scoreCard.getLowerSectionToKeep().length; i++)
+				    for (int count = 0; count < scoreCard.getLowerSectionToKeep().length; count++)
 				    {
-				    	if (scoreCard.getLowerSectionToKeep()[i] != 0)
+				    	if (scoreCard.getLowerSectionToKeep()[count] != 0)
 				    	{
 				    		lowerSectionIsFull = false;
 				    	}
@@ -289,6 +275,7 @@ public class GameEngine {
 								}		
 								else
 								{
+									// if upper section is full
 									if (upperSectionIsFull.equals(true) && chooseSection != 2)
 									{
 										System.err.println("Upper Section Is Full! ");
@@ -330,6 +317,7 @@ public class GameEngine {
 								}
 								else
 								{
+									// if lower section is full
 									if (lowerSectionIsFull.equals(true) && chooseSection != 1 )
 									{
 										System.err.println("Lower Section Is Full! ");
@@ -364,15 +352,21 @@ public class GameEngine {
 					oneTimeBonus = true;
 				}
 			}
-			
-			
+						
 			// shows score sheet and die
-			jokerRules(scoreCard, totalDie);
-
+			displayInfo(scoreCard, totalDie);
+			
+			// glitch fix for the upper bonus
+			if(oneTimeBonus == true && fixOneTimeBonus == false)
+			{
+				if (scoreCard.getBonusAchieved().equals(true))
+				{
+					this._upperScore = this._upperScore - 35; 			
+					fixOneTimeBonus = true;
+				}
+			}
 		}
-
-		scoreCard.calculateAndDisplayTotalScore();
-		
-
+		// displays users final score
+		scoreCard.calculateAndDisplayTotalScore();	
 	}
 }

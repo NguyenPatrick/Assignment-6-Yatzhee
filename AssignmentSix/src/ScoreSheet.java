@@ -27,6 +27,7 @@ public class ScoreSheet {
 	private Boolean _jokerOn = false;
 	
 	private int _totalScore = 0;
+	
 	// _upperSectionRows
 	// [0] = aces
 	// [1] = twos
@@ -36,7 +37,7 @@ public class ScoreSheet {
 	// [5] = sixes
 	// [6] = total score
 	// [7] = bonus
-	// [8] = total
+	// [8] = upper total
 		
 	// _lowerSectionRows
 	// [0] = 3 of a kind
@@ -47,7 +48,7 @@ public class ScoreSheet {
 	// [5] = yatzhee
 	// [6] = chance
 	// [7] = yatzhee bonus
-	// [8] = grand total
+	// [8] = lower total
 	
 	// initial startup --> sets usability of upper and lower rows
 	public void startSectionKeeping()
@@ -146,14 +147,12 @@ public class ScoreSheet {
 		return this._dieOfSameValue;
 	}
 	
-
 	// method fixes a yahtzee bonus glitch (IMPORTANT)
 	public void fixYahtzeeBonus()
 	{
 		this._lowerSectionRows[7] = this._lowerSectionRows[7] - 100;
 	}
 	
-
 	// if the joker rule scenario actually occurs
 	public void updateJokerRules()
 	{
@@ -211,7 +210,7 @@ public class ScoreSheet {
 			}
 		}
 		
-		// absolute values of the upper section (not always used on score sheet)
+		// absolute values of the upper section (not used on score sheet)
 		int[] upperSectionRowsTemp = new int[9];
 		
 		for (int count = 0; count < 6; count ++)
@@ -225,8 +224,7 @@ public class ScoreSheet {
 				}
 			}
 		}
-
-		
+	
 		// bonus for upper score, yahtzee bonus
 		if (this._bonusAchieved == false)
 		{
@@ -242,8 +240,6 @@ public class ScoreSheet {
 			}
 		}
 		
-		
-
 		// calculations for the lower section
 		int[] dieFaceValues = new int[5];	
 		int[] dieValues = Arrays.copyOf(upperSectionRowsTemp, 6);	// array of the die number values
@@ -332,35 +328,32 @@ public class ScoreSheet {
 			{
 				this._lowerSectionRows[6] = sumOfDieValues;			
 			}	
-		}
-		
-		
+		}		
 	}
-
 	
+	// shows final score
 	public void calculateAndDisplayTotalScore()
 	{
 		this._totalScore = this._upperSectionRows[8] + this._lowerSectionRows[8];
 		System.out.println("Congralutions! You Finished Yatzhee! Your Final Score Is: " + this._totalScore);
 	}
 	
-	
+	// displays score sheet
 	public void displayInfo()
 	{
-		// displays Score Sheet
 		String upperSection = 
 			     "================================ \n"
 			+    "   SCORE SHEET: UPPER SECTION \n" 
 			+    "================================ \n"
-			+    "| 1 | Aces         | " + this._upperSectionRows[0] + this._upperSectionRowsStatus[0] + "\n"
-			+    "| 2 | Twos         | " + this._upperSectionRows[1] + this._upperSectionRowsStatus[1] +  "\n"
-			+    "| 3 | Threes       | " + this._upperSectionRows[2] + this._upperSectionRowsStatus[2] +  "\n"
-			+    "| 4 | Fours        | " + this._upperSectionRows[3] + this._upperSectionRowsStatus[3] +  "\n"
-			+    "| 5 | Fives        | " + this._upperSectionRows[4] + this._upperSectionRowsStatus[4] +  "\n"
-			+    "| 6 | Sixes        | " + this._upperSectionRows[5] + this._upperSectionRowsStatus[5] +  "\n"
-			+    "|   | Total Score  | " + this._upperSectionRows[6] + "\n"
-			+    "|   | Bonus        | " + this._upperSectionRows[7] + "\n"
-			+    "|   | Total        | " + this._upperSectionRows[8];
+			+    "| 1 | Aces          | " + this._upperSectionRows[0] + this._upperSectionRowsStatus[0] + "\n"
+			+    "| 2 | Twos          | " + this._upperSectionRows[1] + this._upperSectionRowsStatus[1] +  "\n"
+			+    "| 3 | Threes        | " + this._upperSectionRows[2] + this._upperSectionRowsStatus[2] +  "\n"
+			+    "| 4 | Fours         | " + this._upperSectionRows[3] + this._upperSectionRowsStatus[3] +  "\n"
+			+    "| 5 | Fives         | " + this._upperSectionRows[4] + this._upperSectionRowsStatus[4] +  "\n"
+			+    "| 6 | Sixes         | " + this._upperSectionRows[5] + this._upperSectionRowsStatus[5] +  "\n"
+			+    "|   | Total Score   | " + this._upperSectionRows[6] + "\n"
+			+    "|   | Bonus         | " + this._upperSectionRows[7] + "\n"
+			+    "|   | Total + Bonus | " + this._upperSectionRows[8];
 	
 	    String lowerSection = 
 			     "================================ \n"

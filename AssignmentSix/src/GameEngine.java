@@ -368,7 +368,7 @@ public class GameEngine {
 			
 			// shows score sheet and die
 			jokerRules(scoreCard, totalDie);
-			this._upperScore = this._upperScore - 35;	
+
 		}
 
 		scoreCard.calculateAndDisplayTotalScore();
